@@ -1,6 +1,7 @@
 package com.example.stock.service;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -16,10 +17,10 @@ import com.example.stock.domain.Stock;
 import com.example.stock.repository.StockRepository;
 
 @SpringBootTest
-class StockServiceTest {
+class PessimisticLockStockServiceTest {
 
     @Autowired
-    private StockService stockService;
+    private PessimisticLockStockService stockService;
 
     @Autowired
     private StockRepository stockRepository;
@@ -66,7 +67,7 @@ class StockServiceTest {
         Stock stock = stockRepository.findById(1L).orElseThrow();
 
         // 얘상 -> 처음 = 100개, 100번 반복하기 때문에 100개 제거될 것으로 예상
-        assertThat(stock.getQuantity()).isNotEqualTo(0);
+        assertThat(stock.getQuantity()).isEqualTo(0);
     }
-}
 
+}
