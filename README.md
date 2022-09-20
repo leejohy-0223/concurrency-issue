@@ -1,4 +1,4 @@
-## 재고 시스템으로 알아보는 동시성 이슈 해결 방법
+# 재고 시스템으로 알아보는 동시성 이슈 해결 방법
 
 인프런의 [재고 시스템으로 알아보는 동시성 이슈 해결 방법](https://www.inflearn.com/course/%EB%8F%99%EC%8B%9C%EC%84%B1%EC%9D%B4%EC%8A%88-%EC%9E%AC%EA%B3%A0%EC%8B%9C%EC%8A%A4%ED%85%9C/dashboard) 강의를 참고하였습니다.  
 재고 시스템에서 발생하는 동시성 이슈를 다음 세 가지 방법으로 해결하는 과정을 정리하였습니다. 
@@ -9,7 +9,17 @@
 
 <br>
 
-### 1. 실습 환경
+## 목차
+
+- [1. 실습 환경](#1------)
+- [2. 간단한 재고 시스템 로직](#2--------------)
+- [3. 해결 방법 1 - synchronized 사용](#3-------1---synchronized---)
+- [4. 해결 방법 2 - Database Lock 사용](#4-------2---database-lock---)
+- [5. 해결 방법 3 - Redis 사용](#5-------3---redis---)
+
+<br>
+
+## 1. 실습 환경
 - Springboot 
 - JPA
 - MySQL
@@ -17,7 +27,7 @@
 
 <br>
 
-### 2. 간단한 재고 시스템 로직
+## 2. 간단한 재고 시스템 로직
 
 > **Stock 감소 로직**
 ```java
@@ -33,7 +43,7 @@ public void decrease(Long id, Long quantity) {
 
 <br>
 
-### 3. 해결 방법 1 - synchronized 사용
+## 3. 해결 방법 1 : synchronized 사용
 
 > **synchronized keyword 추가**
 ```java
@@ -91,7 +101,7 @@ public synchronized void decrease(Long id, Long quantity) {
 
 <br>
 
-### 4. 해결 방법 2 - Database Lock 사용
+## 4. 해결 방법 2 : database lock 사용
 
 > **1. Pessimistic(비관적) Lock 활용하여 해결**
 
@@ -268,7 +278,7 @@ public synchronized void decrease(Long id, Long quantity) {
 
 <br>
 
-### 5. 해결 방법 3 - Redis 사용
+## 5. 해결 방법 3 : redis 사용
 
 ``Lettuce``와 ``Redission``을 활용해서 분산락을 구현할 수 있습니다.
 둘을 간단히 비교하면 다음과 같습니다.
